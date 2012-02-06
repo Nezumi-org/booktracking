@@ -1,0 +1,39 @@
+KCLS Library book tracking program: The aim of the program is to persist all checked out books, allowing later query and preventing from checking out the same books. I like to use Python for web scraping and text parsing because it offers more libraries such as Mechanize and BeautifySoup. The project is in progress. 
+s/booktracking$ tree
+.
+|-- pom.xml
+|-- src
+|   |-- main
+|   |   |-- java
+|   |   |   `-- org
+|   |   |       `-- nezumi
+|   |   |           `-- booktracking
+
+|   |   |               |-- factory
+|   |   |               |   `-- KCLSFactory.java   # load Jython module into java
+|   |   |               |-- interfaces
+|   |   |               |   |-- BookType.java      # the implementation is done in jython
+|   |   |               |   `-- KCLSType.java
+|   |   |               |-- Main.java
+|   |   |               |-- model
+|   |   |               |-- persist              
+|   |   |               |   |-- BookDAO.java
+|   |   |               |   `-- DBManager.java
+|   |   `-- resources
+|   |       |-- Lib
+|   |       |   |-- KCLS.py                    # The Jython classes, log on KCLS, extract book info from the html, pass the book object to Java
+
+
+# Currently JDBC is used to write to HSQLDB. In the future, add Hibernate layer. Perhaps use MYSQL.  
+TABLE PATRONS
+             (ACCOUNTNO INTEGER IDENTITY PRIMARY KEY,
+                  PASSWORD VARCHAR(100));
+                   
+TABLE BOOKS   (BARCODE VARCHAR(100) PRIMARY KEY,
+	       TITLE VARCHAR(100), 
+	       AUTHOR VARCHAR(100),
+	       CALLNUMBER VARCHAR(100),
+               DUEDATE VARCHAR(100),
+	        PATRONS INTEGER NULL,
+	       FOREIGN KEY (PATRONS) REFERENCES PATRONS(ACCOUNTNO)
+	       );
