@@ -88,9 +88,9 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		<!--To use 3rd party lib, add Lib dir under C:\Users\ncurtis\.m2\repository\org\python\jython-standalone\2.5.2\
+		<!--To use 3rd party lib, add Lib dir
 		such as \Lib\mechanize. No need to unpack jar and repack! 
-		linux: check /home/noriko/workspace/mykcls/booktracking/src/main/resources/Lib/mechanize
+		
 		 -->
 		<dependency>
 			<groupId>org.python</groupId>
