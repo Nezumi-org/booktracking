@@ -1,4 +1,4 @@
-KCLS Library book tracking program: The aim of the program is to persist all checked out books, allowing later query and preventing from checking out the same books. I like to use Python for web scraping and text parsing because it offers more libraries such as Mechanize and BeautifySoup. The project is in progress. 
+KCLS Library book tracking program: maintains checked out books, allowing later query. Python is used for web scraping and text parsing because it offers useful libraries such as Mechanize and BeautifySoup.  
 s/booktracking$ tree
 .
 |-- pom.xml
@@ -8,23 +8,24 @@ s/booktracking$ tree
 |   |   |   `-- org
 |   |   |       `-- nezumi
 |   |   |           `-- booktracking
-
 |   |   |               |-- factory
 |   |   |               |   `-- KCLSFactory.java   # load Jython module into java
 |   |   |               |-- interfaces
-|   |   |               |   |-- BookType.java      # the implementation is done in jython
+|   |   |               |   |-- BookType.java      # implemented in Jython
 |   |   |               |   `-- KCLSType.java
-|   |   |               |-- Main.java
-|   |   |               |-- model
+|   |   |               |-- Main.java              # pass account num. and pw to Jython, receive book obj of BookType from Jython
 |   |   |               |-- persist              
 |   |   |               |   |-- BookDAO.java
-|   |   |               |   `-- DBManager.java
+|   |   |               |   `-- DBManager.java     # JDBC is used. Later, add Hibernate layer
+|   |   |               |-- model                  #TODO
+|   |   |               |-- webapp                 #TODO
 |   |   `-- resources
 |   |       |-- Lib
-|   |       |   |-- KCLS.py                    # The Jython classes, log on KCLS, extract book info from the html, pass the book object to Java
+|   |       |   |-- KCLS.py     # log on KCLS, retrieve data, parse the resulting html, build the BookType object
 
 
-# Currently JDBC is used to write to HSQLDB. In the future, add Hibernate layer. Perhaps use MYSQL.  
+HSQLDB
+-------  
 TABLE PATRONS
              (ACCOUNTNO INTEGER IDENTITY PRIMARY KEY,
                   PASSWORD VARCHAR(100));
@@ -36,4 +37,4 @@ TABLE BOOKS   (BARCODE VARCHAR(100) PRIMARY KEY,
                DUEDATE VARCHAR(100),
 	        PATRONS INTEGER NULL,
 	       FOREIGN KEY (PATRONS) REFERENCES PATRONS(ACCOUNTNO)
-	       );
+	       ); 
